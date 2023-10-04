@@ -134,7 +134,19 @@ async function activeTournamentCheck(req,res){
     const activeTourneyInfoQuery = 'SELECT * FROM tournaments WHERE tournament_id = ANY($1::int[])'
     const activeTourneyInfoResults = await pool.query(activeTourneyInfoQuery,[activeTournamentIDs])
 
-    res.status(200).json({ tournamentDetails: activeTourneyInfoResults.rows });
+    const has_joined = []
+    const has_created = []
+
+    activeTourneyInfoResults.rows.forEach(row => {
+      if (row.created_by === userID) {
+        has_created.push(row);
+      }
+      else {
+        has_joined.push(row);
+      }
+    })
+
+    res.status(200).json({ joined: has_joined, created: has_created});
     } catch (error) {
       onsole.error(error);
       res.status(500).json({ message: 'Server Error' });

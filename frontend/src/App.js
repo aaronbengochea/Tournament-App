@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import {LogIn, SignUp, HomePage, CreateTournament} from './components';
+import {LogIn, SignUp, HomePage, CreateTournament, UserHub} from './components';
 import './index.css';
 
 function App() {
@@ -20,6 +20,7 @@ function App() {
               <Route path='/register' element={<SignUp/>}></Route>
               <Route path='/home' element={<HomePage/>}></Route>
               <Route path='/createTournament' element={<CreateTournament/>}></Route>
+              <Route path='/userHub' element={<UserHub/>}></Route>
             </Routes>
 
             </ul>
