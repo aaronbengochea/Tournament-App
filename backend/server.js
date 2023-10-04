@@ -12,6 +12,7 @@ app.post('/create_user', db.createUser)
 app.post('/create_tournament', db.createTournament)
 app.post('/login_check', db.loginCheck)
 app.post('/join_tournament', db.joinTournament)
+app.get('/active_tournaments',db.activeTournamentCheck)
 
 
 app.get('/backend_check', (req,res) => {

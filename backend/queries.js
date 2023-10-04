@@ -122,6 +122,26 @@ async function joinTournament(req,res){
   }
 }
 
+async function activeTournamentCheck(req,res){
+  try {
+    const {userID} = req.body;
+
+    const activeTourneyQuery = 'SELECT * FROM tm1 WHERE user_id = $1'
+    const activeTourneyResult = await pool.query(activeTourneyQuery,[userID])
+
+    const activeTournamentIDs = activeTourneyResult.rows.map(row => row.tournamentID)
+
+    const activeTourneyInfoQuery = 'SELECT * FROM tournaments WHERE tournament_id = ANY($1::int[])'
+    const activeTourneyInfoResults = await pool.query(activeTourneyInfoQuery,[activeTournamentIDs])
+
+    res.status(200).json({ tournamentDetails: activeTourneyInfoResults.rows });
+    } catch (error) {
+      onsole.error(error);
+      res.status(500).json({ message: 'Server Error' });
+    }
+}
+
+
 
 
 module.exports = {
@@ -129,4 +149,5 @@ module.exports = {
   createTournament,
   loginCheck,
   joinTournament,
+  activeTournamentCheck,
 }
