@@ -24,7 +24,7 @@ function UserHub() {
     return (
             <div className="FormCenter">
                 
-                    <p>Registration Form:</p>
+                    <p>Registration Form: Aaron</p>
             
             </div>
         );
