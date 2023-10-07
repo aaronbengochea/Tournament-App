@@ -1,12 +1,4 @@
-const Pool = require('pg').Pool
-
-const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'api',
-  password: 'XXXXXXXXXXXX',
-  port: 5432,
-})
+const pool = require('./dbConfig')
 
 const createUser = (req,res) => {
   const {gamerTag, email, password} = req.body
