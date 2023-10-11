@@ -146,6 +146,24 @@ async function activeTournamentCheck(req,res){
 }
 
 
+async function tournamentHubLoader(req,res){
+  try {
+    const userID = req.query.userID
+    const clickedTournamentID = req.query.clickedTournamentID
+
+    const playerQuery = 'SELECT * FROM tm1 WHERE tournament_id = $1'
+    const playerResult = await pool.query(playerQuery, [clickedTournamentID])
+
+    const tournamentQuery = 'SELECT * FROM tournaments WHERE id = $1'
+    const tournamentResult = await pool.query(tournamentQuery,[clickedTournamentID])
+
+    res.status(200).json({players: playerResult, tournamentInfo: tournamentResult});
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({message: 'Server Error'})
+    }
+}
+
 
 
 module.exports = {
@@ -154,4 +172,5 @@ module.exports = {
   loginCheck,
   joinTournament,
   activeTournamentCheck,
+  tournamentHubLoader,
 }
