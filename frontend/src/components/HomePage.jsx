@@ -37,8 +37,6 @@ const HomePage = () => {
         //Join Tourney
         if (buttonClicked === 1){
 
-            console.log('btn1');
-            console.log(typeof intTournamentID);
             console.log(userID);
             console.log(userGamerTag);
 
