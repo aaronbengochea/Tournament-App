@@ -8,6 +8,7 @@ function UserHub() {
 
 
   useEffect(() => {
+
     const localStoreID = localStorage.getItem('userID');
     axios.get('http://localhost:4000/active_tournaments', {
       params: {
@@ -44,7 +45,7 @@ function UserHub() {
               <tr key={index}>
                 <td className="table-cell">   
                     <NavLink
-                        to="/tournamentPage"
+                        to="/tournamentHub"
                         onClick={() => handleTournamentIDClick(tournament.id)}
                     >
                         {tournament.id}

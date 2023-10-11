@@ -42,7 +42,6 @@ function TournamentHub() {
   }, []);
 
   useEffect(() => {
-    console.log('effect2')
     if (createdByUserID && players.length > 0) {
       const createdByPlayer = players.find(player => player.user_id === createdByUserID)
       if (createdByPlayer){
@@ -52,17 +51,21 @@ function TournamentHub() {
     }
   }, [createdByUserID, players]);
 
+  
 
   return (
     <div className="TournamentHub">
       <h2>Tournament Hub</h2>
       <h3>Tournament Details:</h3>
+      <p>Tournament ID: {tournamentInfo.id}</p>
       <p>Name: {tournamentInfo.tournament_name}</p>
       <p>Game Type: {tournamentInfo.game_name}</p>
       <p>Elimination Type: {tournamentInfo.elimination_type}</p>
       <p>Admin: {createdByGamertag}</p>
       <p>Capacity: {players.length}/{tournamentInfo.player_total}</p>
       <p>Completed? {tournamentInfo.completed}</p>
+      <p>Invite Only? {tournamentInfo.invite_only}</p>
+      <p>Current Round: </p>
       <p></p>
       <h3>Participants:</h3>
       <ul>
