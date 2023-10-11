@@ -116,14 +116,14 @@ async function joinTournament(req,res){
 
 async function activeTournamentCheck(req,res){
   try {
-    const {userID} = req.body;
+    const userID = req.query.userID
 
     const activeTourneyQuery = 'SELECT * FROM tm1 WHERE user_id = $1'
     const activeTourneyResult = await pool.query(activeTourneyQuery,[userID])
 
-    const activeTournamentIDs = activeTourneyResult.rows.map(row => row.tournamentID)
+    const activeTournamentIDs = activeTourneyResult.rows.map(row => row.tournament_id)
 
-    const activeTourneyInfoQuery = 'SELECT * FROM tournaments WHERE tournament_id = ANY($1::int[])'
+    const activeTourneyInfoQuery = 'SELECT * FROM tournaments WHERE id = ANY($1::int[])'
     const activeTourneyInfoResults = await pool.query(activeTourneyInfoQuery,[activeTournamentIDs])
 
     const has_joined = []
@@ -140,7 +140,7 @@ async function activeTournamentCheck(req,res){
 
     res.status(200).json({ joined: has_joined, created: has_created});
     } catch (error) {
-      onsole.error(error);
+      console.error(error);
       res.status(500).json({ message: 'Server Error' });
     }
 }

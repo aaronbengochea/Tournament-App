@@ -8,10 +8,14 @@ function UserHub() {
 
 
   useEffect(() => {
+    console.log("use effect start")
+
     const localStoreID = localStorage.getItem('userID');
+
+    console.log(localStoreID)
     axios.get('http://localhost:4000/active_tournaments', {
       params: {
-        userID: localStoreID
+        userID: localStoreID,
       }
     })
     .then(function (res) {
