@@ -46,9 +46,8 @@ function UserHub() {
                 <td className="table-cell">   
                     <NavLink
                         to="/tournamentHub"
-                        onClick={() => handleTournamentIDClick(tournament.id)}
-                    >
-                        {tournament.id}
+                        onClick={() => handleTournamentIDClick(tournament.id)}>
+                      {tournament.id}
                     </NavLink>
                 </td>
                 <td className="table-cell">{tournament.tournament_name}</td>
@@ -69,7 +68,13 @@ function UserHub() {
           <tbody>
             {userTournaments.created.map((tournament, index) => (
               <tr key={index}>
-                <td className="table-cell">{tournament.id}</td>
+                <td className="table-cell">
+                  <NavLink
+                      to="/tournamentHub"
+                      onClick={() => handleTournamentIDClick(tournament.id)}>
+                    {tournament.id}
+                  </NavLink>
+                </td>
                 <td className="table-cell">{tournament.tournament_name}</td>
                 <td className="table-cell">{tournament.player_total}</td>
               </tr>
