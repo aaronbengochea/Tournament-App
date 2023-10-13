@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 
+
 function UserHub() {
   
   const [userTournaments, setUserTournaments] = useState({ joined: [], created: [] });

@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import {LogIn, SignUp, HomePage, CreateTournament, UserHub, TournamentHub} from './components';
+import {LogIn, SignUp, HomePage, CreateTournament, UserHub, TournamentHub, TournamentBracketsEditor} from './components';
 import './index.css';
 
 function App() {
@@ -22,6 +22,7 @@ function App() {
               <Route path='/createTournament' element={<CreateTournament/>}></Route>
               <Route path='/userHub' element={<UserHub/>}></Route>
               <Route path='/tournamentHub' element={<TournamentHub/>}></Route>
+              <Route path='/bracketTest' element={<TournamentBracketsEditor/>}></Route>
             </Routes>
 
             </ul>

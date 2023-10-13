@@ -10,6 +10,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import {TournamentBracketsEditor} from './TournamentViewer'
 
 
 function TournamentHub() {
@@ -75,6 +76,9 @@ function TournamentHub() {
           </li>
         ))}
       </ul>
+      <div>
+        <TournamentBracketsEditor></TournamentBracketsEditor>
+      </div>
     </div>
   );
 }
