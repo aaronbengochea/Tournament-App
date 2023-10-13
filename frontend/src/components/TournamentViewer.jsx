@@ -13,7 +13,7 @@ const TournamentBracketsEditor = ({ type }) => {
     const [data, setData] = useState();
 
     const size = 8 //we can import this
-    const participants = ["1", "2", "3", "4", "5", "6", "7", "8"] //we can put gamertags here
+    const participants = ["1", "Aaron", "Cicy", "4", "5", "6", "7", "8"] //we can put gamertags here
 
     const rerendering = async () => {
         const bracketsViewerNode = document.querySelector(".brackets-viewer");
@@ -26,18 +26,27 @@ const TournamentBracketsEditor = ({ type }) => {
     
           try {
             await manager.update.match({
-              id: match.id,
+              id: 3,
               opponent1: { score: 5 },
               opponent2: { score: 7, result: "win" }
             });
+
+            await manager.update.match({
+                id: 3,
+                opponent1: { score: 7, result: "win"  },
+                opponent2: { score: 5}
+              });
             const tourneyData2 = await manager.get.currentMatches(0);
             const tourneyData = await manager.get.stageData(0);
+            
             setData(tourneyData);
             console.log("A tourney", tourneyData2);
             console.log("A Stage: ", tourneyData)
             // console.log(tourneyData);
           } catch (error) {}
         };
+
+        
     
         if (data && data.participant !== null) {
           // This is optional. You must do it before render().
@@ -47,6 +56,8 @@ const TournamentBracketsEditor = ({ type }) => {
               imageUrl: "https://github.githubassets.com/pinned-octocat.svg"
             }))
           );
+
+
             
           //renders the actual bracket
           window.bracketsViewer.render(
@@ -110,9 +121,12 @@ const TournamentBracketsEditor = ({ type }) => {
             }
         });
 
+
         const tournamentData = await manager.get.stageData(0);
         setData(tournamentData);
-        console.log(tournamentData);
+        console.log("first render: ", tournamentData);
+        //tournamentData.participant[1].name = 'Sam'
+        console.log(tournamentData.match.id)
     }
 
     useEffect(() => {
