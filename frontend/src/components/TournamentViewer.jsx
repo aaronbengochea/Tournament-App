@@ -9,11 +9,16 @@ import "./tvs.css";
 const storage = new InMemoryDatabase();
 const manager = new BracketsManager(storage);
 
+const { helpers } = require('brackets-manager');
+
 const TournamentBracketsEditor = ({ type }) => {
     const [data, setData] = useState();
 
     const size = 8 //we can import this
-    const participants = ["1", "Aaron", "Cicy", "4", "5", "6", "7", "8"] //we can put gamertags here
+    const participants = ["1","Aaron","Cicy", "4", "5", "6", "7", "8"] //we can put gamertags here
+
+    const size2 = 16 //we can import this
+    const participants2 = ["1", null, "Aaron", null, "Cicy", null, "4", null, "5",null, "6",null, "7",null, "8", "9"]
 
     const rerendering = async () => {
         const bracketsViewerNode = document.querySelector(".brackets-viewer");
@@ -36,12 +41,18 @@ const TournamentBracketsEditor = ({ type }) => {
                 opponent1: { score: 7, result: "win"  },
                 opponent2: { score: 5}
               });
-            const tourneyData2 = await manager.get.currentMatches(0);
+            //const tourneyData2 = await manager.get.currentMatches(0);
             const tourneyData = await manager.get.stageData(0);
             
             setData(tourneyData);
-            console.log("A tourney", tourneyData2);
-            console.log("A Stage: ", tourneyData)
+            console.log("getLoser helper: ", helpers.getLoser(tourneyData.match[3]))
+            
+            console.log("balanceByes helper: ", helpers.balanceByes(participants2,size2))
+            console.log("findPosition: ", helpers.findPosition(tourneyData.match,3))
+            const newSeed = helpers.extractParticipantsFromSeeding(0,participants2)
+            console.log("extractParticipantsFromSeed: ", newSeed )
+            //console.log("A tourney", tourneyData2);
+            //console.log("A Stage: ", tourneyData)
             // console.log(tourneyData);
           } catch (error) {}
         };
