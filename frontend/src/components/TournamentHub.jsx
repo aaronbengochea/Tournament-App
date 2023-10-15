@@ -64,7 +64,8 @@ function TournamentHub() {
       <p>Elimination Type: {tournamentInfo.elimination_type}</p>
       <p>Admin: {createdByGamertag}</p>
       <p>Capacity: {players.length}/{tournamentInfo.player_total}</p>
-      <p>Completed? {tournamentInfo.completed}</p>
+      <p>Began? {tournamentInfo.began === 0 ? 'No' : 'Yes'}</p>
+      <p>Completed? {tournamentInfo.completed === 0 ? 'No' : 'Yes'} </p>
       <p>Invite Only? {tournamentInfo.invite_only}</p>
       <p>Current Round: </p>
       <p></p>

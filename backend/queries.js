@@ -87,23 +87,44 @@ async function joinTournament(req,res){
     const playerTotalQuery = 'SELECT player_total FROM tournaments WHERE id = $1';
     const playerTotalResults = await pool.query(playerTotalQuery,[tournamentID]);
 
-    const entryCount = countResult.rows[0].entry_count;
+    const entryCount = parseInt(countResult.rows[0].entry_count);
     const playerTotal = playerTotalResults.rows[0].player_total;
-    const hasJoined = checkEntryResults.rows[0].has_joined
+    const hasJoined = parseInt(checkEntryResults.rows[0].has_joined);
 
-    console.log(hasJoined)
-    console.log(entryCount)
-    console.log(playerTotal)
-
+    console.log("hasJoined?", hasJoined)
+    console.log("entryCount: ", entryCount)
 
     if (hasJoined > 0) {
-      res.status(400).json({message: 'You have already joined the tournament, please check the player hub'})
+      res.status(200).json({message: 'You have already joined the tournament, please check the player hub'})
     }
     else if (entryCount < playerTotal){
       const insertUserQuery = 'INSERT INTO tm1 (tournament_id, gamertag, user_id) VALUES ($1, $2, $3)';
       await pool.query(insertUserQuery,[tournamentID, userGamerTag, userID])
 
-      res.status(200).json({message: 'Congratulations! You have succesfully joined the tournament'})
+      const selectTournamentQuery = 'SELECT * FROM tournaments WHERE id = $1';
+      const selectTournamentResults = await pool.query(selectTournamentQuery,[tournamentID])
+
+      const selectParticipantsQuery = 'SELECT * FROM tm1 WHERE tournament_id = $1';
+      const selectParticipantsResults = await pool.query(selectParticipantsQuery, [tournamentID])
+
+      console.log("Began? ", selectTournamentResults.rows[0].began === 0)
+      console.log("entryCount: ", entryCount)
+      console.log("playerTotal-1: ", playerTotal - 1)
+
+      if (selectTournamentResults.rows[0].began === 0 && entryCount === playerTotal - 1){
+
+        const participants = []
+
+        selectParticipantsResults.rows.forEach(row => {
+          participants.push(row.gamertag)
+        })
+
+        res.status(200).json({message: 'Congratulations! You have succesfully joined the tournament', participants: participants, tournamentDetails: selectTournamentResults})
+
+      }else{
+        res.status(200).json({message: 'Congratulations! You have succesfully joined the tournament'})
+      }
+
     }
     else {
       res.status(400).json({message: 'Unfortunatly, the tournament is already at full capacity'})
