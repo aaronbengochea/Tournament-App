@@ -24,7 +24,6 @@ function ClearForm() {
       inviteOnlyPasscode: '',
       startBy: '',
       endBy: '',
-      completed: 'No',
     });
 
     const navigate = useNavigate();
