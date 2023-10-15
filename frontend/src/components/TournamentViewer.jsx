@@ -14,7 +14,7 @@ const { helpers } = require('brackets-manager');
 const TournamentBracketsEditor = ({ type }) => {
     const [data, setData] = useState();
 
-    const size = 8 //we can import this
+    const size = 9 //we can import this
     const participants = ["1","Aaron","Cicy", "4", "5", "6", "7", "8"] //we can put gamertags here
 
     const size2 = 16 //we can import this
