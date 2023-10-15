@@ -18,15 +18,15 @@ const createUser = (req,res) => {
 };
 
 const createTournament = (req,res) => {
-  const {tournamentName, playerTotal, gameName, eliminationType, inviteOnly, inviteOnlyPasscode, startBy, endBy, completed, userID, userGamerTag } = req.body
+  const {tournamentName, playerTotal, gameName, eliminationType, inviteOnly, inviteOnlyPasscode, startBy, endBy, userID, userGamerTag } = req.body
   let tournamentID;
 
 
   pool.query('INSERT INTO tournaments \
               (tournament_name, player_total, game_name, elimination_type, \
-              invite_only, invite_only_passcode, start_by, end_by, completed, created_by ) \
-              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *',
-              [tournamentName, playerTotal, gameName, eliminationType, inviteOnly, inviteOnlyPasscode, startBy, endBy, completed, userID], (error, results) => {
+              invite_only, invite_only_passcode, start_by, end_by, created_by ) \
+              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
+              [tournamentName, playerTotal, gameName, eliminationType, inviteOnly, inviteOnlyPasscode, startBy, endBy, userID], (error, results) => {
     if (error) {
       throw error
     }
