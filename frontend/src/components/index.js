@@ -5,6 +5,7 @@ export {CreateTournament} from './CreateTournament'
 export {UserHub} from './UserHub'
 export {TournamentHub} from './TournamentHub'
 export {TournamentBracketsEditor} from './TournamentViewer'
+export {Viewer} from './Viewer'
 
 
 
