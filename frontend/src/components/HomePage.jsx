@@ -113,15 +113,10 @@ const HomePage = () => {
                         data: formData2,
                         config: { headers: { 'Content-Type': 'multipart/form-data' } },
                       })
-                      .then()
+                      .then(function (response) {
+                        console.log("Backend t_state Store: ", response)
+                      })
                       .catch()
-                    
-                      
-
-
-
-
-
 
 
                   }
