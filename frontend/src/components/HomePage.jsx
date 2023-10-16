@@ -78,6 +78,7 @@ const HomePage = () => {
                     }
                     
                     try{
+                        console.log("saving tourney data")
                         tournamentState = await manager.get.stageData(0)
                     } catch (error) {
                         console.error("error making seed")
@@ -111,25 +112,15 @@ const HomePage = () => {
                     .catch()
                     
 
-                  }
-                  console.log(response);
-                  console.log(response.data);
-                  
+                  }                
           
-                  // Redirect to another route after successful submission
                   navigate('/userHub'); // Use the navigate function - this belongs in the next axios post
                 })
                 .catch(function (response) {
                   // Handle errors
                 });
 
-            
-
-
-                //axios post to send tourney state & info to DB (tourneyID, tourneyObject, idParticipantMap)
-                //will need to create a new table in DB to store this
-
-                //add viewer to the tournamentHub page, it will take in info from DB to populate it
+        //add viewer to the tournamentHub page, it will take in info from DB to populate it
             
 
 
