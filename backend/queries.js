@@ -199,7 +199,18 @@ const createTournamentObject = (req,res) => {
       const tournamentState = results.rows[0].tournament_state;
       const playerIDMap = results.rows[0].player_id_map;
 
-      res.status(201).json({tournamentID, tournamentState, playerIDMap});
+      pool.query(
+        'UPDATE tournaments SET began = 1 WHERE id = $1',
+        [t_id],
+        (updateError, updateResult) => {
+          if (updateError) {
+            console.error("Error updating the began field")
+            res.status(500).json({error: "Internal Service Error"})
+          } else {
+            res.status(201).json({tournamentID, tournamentState, playerIDMap});
+          }
+        }
+      )    
   })
 };
 
@@ -215,5 +226,5 @@ module.exports = {
   activeTournamentCheck,
   tournamentHubLoader,
   createTournamentObject,
-  
+
 }

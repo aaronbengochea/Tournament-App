@@ -35,9 +35,6 @@ const HomePage = () => {
         //Join Tourney
         if (buttonClicked === 1){
 
-            console.log(userID);
-            console.log(userGamerTag);
-
             const formData = {
                 tournamentID: intTournamentID,
                 userID: userID,
@@ -51,7 +48,6 @@ const HomePage = () => {
                 config: { headers: { 'Content-Type': 'multipart/form-data' } },
               })
                 .then(async function (response) {
-                  console.log('info sent');
                   if (response.data.message === true){
                     console.log("Build Tournament Catch")
 
