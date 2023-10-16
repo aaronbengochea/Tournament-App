@@ -13,11 +13,6 @@ const manager = new BracketsManager(storage);
 const HomePage = () => {
     const [buttonClicked, setButtonClicked] = useState('');
     const [tournamentID, setTournamentID] = useState('');
-
-    const [participants, setParticipants] = useState()
-    const [tournamentDetails, setTournamentDetails] = useState()
-    const [stageDetails, setStageDetails] = useState()
-
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -59,11 +54,9 @@ const HomePage = () => {
                   console.log('info sent');
                   if (response.data.message === true){
                     console.log("Build Tournament Catch")
+
                     const participantsData = response.data.participants
-                    const tournamentData = response.data.tournamentDetails.rows[0]
-                    setParticipants(participantsData)
-                    setTournamentDetails(tournamentData)
-                    
+                    const tournamentData = response.data.tournamentDetails.rows[0]                   
                     let tournamentState
 
                     try {
@@ -87,7 +80,6 @@ const HomePage = () => {
                     try{
                         console.log("saving tourney data")
                         tournamentState = await manager.get.stageData(0)
-                        setStageDetails(tournamentState)
                     } catch (error) {
                         console.error("error making seed")
                     }
@@ -112,12 +104,12 @@ const HomePage = () => {
                         url: 'http://localhost:4000/create_tournament_object',
                         data: formData2,
                         config: { headers: { 'Content-Type': 'multipart/form-data' } },
-                      })
-                      .then(function (response) {
+                    })
+                    .then(function (response) {
                         console.log("Backend t_state Store: ", response)
-                      })
-                      .catch()
-
+                    })
+                    .catch()
+                    
 
                   }
                   console.log(response);
@@ -125,7 +117,7 @@ const HomePage = () => {
                   
           
                   // Redirect to another route after successful submission
-                  //navigate('/userHub'); // Use the navigate function - this belongs in the next axios post
+                  navigate('/userHub'); // Use the navigate function - this belongs in the next axios post
                 })
                 .catch(function (response) {
                   // Handle errors
