@@ -221,8 +221,10 @@ async function getTournamentObject(req,res){
     const retriveStateQuery = 'SELECT * FROM t_state WHERE tournament_id = $1'
     const retrieveStateResult = await pool.query(retriveStateQuery,[tournamentID])
 
+    const tournamentState = retrieveStateResult.rows[0].tournament_state
 
-    res.status(200).json({retrieveStateResult});
+
+    res.status(200).json({tournamentState});
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Server Error' });
@@ -241,6 +243,6 @@ module.exports = {
   tournamentHubLoader,
   createTournamentObject,
   getTournamentObject,
-  
+
 
 }
