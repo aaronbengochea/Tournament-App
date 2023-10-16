@@ -14,7 +14,7 @@ const HomePage = () => {
     const [buttonClicked, setButtonClicked] = useState('');
     const [tournamentID, setTournamentID] = useState('');
 
-    const [participants, setParticipants] = useState([])
+    const [participants, setParticipants] = useState()
     const [tournamentDetails, setTournamentDetails] = useState()
     const [stageDetails, setStageDetails] = useState()
 
@@ -92,10 +92,6 @@ const HomePage = () => {
                         console.error("error making seed")
                     }
 
-                
-                    console.log("tourney blob: ", tournamentState)
-                    console.log(tournamentData.id)
-
                     const participantTable = tournamentState.participant
 
                     const idNameMap = participantTable.reduce((map,participant) => {
@@ -103,15 +99,13 @@ const HomePage = () => {
                         return map;
                     },{})
 
-                    console.log(idNameMap)
-
                     const formData2 = {
                         t_id: tournamentData.id,
                         t_state: tournamentState,
                         p_idMap: idNameMap,
                     }
                     
-                    
+
 
 
 
