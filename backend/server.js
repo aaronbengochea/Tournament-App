@@ -14,6 +14,7 @@ app.post('/login_check', db.loginCheck)
 app.post('/join_tournament', db.joinTournament)
 app.get('/active_tournaments',db.activeTournamentCheck)
 app.get('/tournament_loader', db.tournamentHubLoader)
+app.post('/create_tournament_object',db.createTournamentObject)
 
 
 app.get('/backend_check', (req,res) => {
