@@ -106,7 +106,7 @@ const HomePage = () => {
                     }
 
 
-                    /*
+                    
                     axios({
                         method: 'POST',
                         url: 'http://localhost:4000/create_tournament_object',
@@ -116,7 +116,7 @@ const HomePage = () => {
                       .then()
                       .catch()
                     
-                      */
+                      
 
 
 
