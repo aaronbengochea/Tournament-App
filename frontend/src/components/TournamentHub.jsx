@@ -10,7 +10,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {TournamentBracketsEditor} from './TournamentViewer'
+import { Viewer } from './Viewer';
 
 
 function TournamentHub() {
@@ -52,7 +52,7 @@ function TournamentHub() {
     }
   }, [createdByUserID, players]);
 
-  
+  //build in check so that it only attempts to use Viewer when the began is set to yes
 
   return (
     <div className="TournamentHub">
@@ -78,7 +78,8 @@ function TournamentHub() {
         ))}
       </ul>
       <div>
-        <TournamentBracketsEditor></TournamentBracketsEditor>
+        
+        <Viewer></Viewer>
       </div>
     </div>
   );
