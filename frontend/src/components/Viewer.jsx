@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import "brackets-viewer/dist/brackets-viewer.min.css";
 import "brackets-viewer/dist/brackets-viewer.min.js";
@@ -19,7 +20,7 @@ const Viewer = ({ type }) => {
         })
         .then(function (res) {
           console.log(res.data);
-          setData(res.data.tournament_state);
+          setData(res.data.tournamentState);
 
         })
         .catch(function (err) {
