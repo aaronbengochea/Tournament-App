@@ -119,7 +119,7 @@ async function joinTournament(req,res){
           participants.push(row.gamertag)
         })
 
-        res.status(200).json({message: 'Congratulations! You have succesfully joined the tournament', participants: participants, tournamentDetails: selectTournamentResults})
+        res.status(200).json({message: true, participants: participants, tournamentDetails: selectTournamentResults})
 
       }else{
         res.status(200).json({message: 'Congratulations! You have succesfully joined the tournament'})
