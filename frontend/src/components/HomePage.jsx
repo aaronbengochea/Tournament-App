@@ -78,7 +78,6 @@ const HomePage = () => {
                     }
                     
                     try{
-                        console.log("saving tourney data")
                         tournamentState = await manager.get.stageData(0)
                     } catch (error) {
                         console.error("error making seed")
@@ -107,6 +106,7 @@ const HomePage = () => {
                     })
                     .then(function (response) {
                         console.log("Backend t_state Store: ", response)
+                        navigate('/userHub');
                     })
                     .catch()
                     
