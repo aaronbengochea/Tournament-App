@@ -210,10 +210,24 @@ const createTournamentObject = (req,res) => {
             res.status(201).json({tournamentID, tournamentState, playerIDMap});
           }
         }
-      )    
+      ) 
   })
 };
 
+async function getTournamentObject(req,res){
+  try {
+    const tournamentID = req.query.clickedTournamentID
+
+    const retriveStateQuery = 'SELECT * FROM t_state WHERE tournament_id = $1'
+    const retrieveStateResult = await pool.query(retriveStateQuery,[tournamentID])
+
+
+    res.status(200).json({retrieveStateResult});
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server Error' });
+    }
+}
 
 
 
@@ -226,5 +240,7 @@ module.exports = {
   activeTournamentCheck,
   tournamentHubLoader,
   createTournamentObject,
+  getTournamentObject,
+  
 
 }
