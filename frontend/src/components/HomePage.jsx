@@ -1,19 +1,22 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { BracketsManager } from 'brackets-manager';
+import { InMemoryDatabase } from 'brackets-memory-db';
+
+const storage = new InMemoryDatabase();
+const manager = new BracketsManager(storage);
 
 //clears all the data in the txt fields - important to place this post then function
 //in the sumbit function or else the response wont have data and will trigger errors
-function ClearForm() {
-
-    document.getElementById("tournamentID").value = '';
-    
-};
-
 
 const HomePage = () => {
     const [buttonClicked, setButtonClicked] = useState('');
     const [tournamentID, setTournamentID] = useState('');
+
+    const [participants, setParticipants] = useState([])
+    const [tournamentDetails, setTournamentDetails] = useState()
+    const [stageDetails, setStageDetails] = useState()
 
     const navigate = useNavigate();
 
@@ -52,22 +55,91 @@ const HomePage = () => {
                 data: formData,
                 config: { headers: { 'Content-Type': 'multipart/form-data' } },
               })
-                .then(function (response) {
+                .then(async function (response) {
                   console.log('info sent');
+                  if (response.data.message === true){
+                    console.log("Build Tournament Catch")
+                    const participantsData = response.data.participants
+                    const tournamentData = response.data.tournamentDetails.rows[0]
+                    setParticipants(participantsData)
+                    setTournamentDetails(tournamentData)
+                    
+                    let tournamentState
+
+                    try {
+                        await manager.create.stage({
+                            name: tournamentData.tournament_name,
+                            tournamentId: 0, //could retrieve from db at initialization
+                            type: "single_elimination",
+                            seeding: participantsData,
+                            settings: {
+                                seedOrdering: ["natural"],
+                                balanceByes: false,
+                                size: tournamentData.player_total,
+                                matchesChildCount: 0,
+                                consolationFinal: false
+                            }
+                        })
+                    } catch (error) {
+                        console.error("error creating tourney")
+                    }
+                    
+                    try{
+                        console.log("saving tourney data")
+                        tournamentState = await manager.get.stageData(0)
+                        setStageDetails(tournamentState)
+                    } catch (error) {
+                        console.error("error making seed")
+                    }
+
+                
+                    console.log("tourney blob: ", tournamentState)
+                    console.log(tournamentData.id)
+
+                    const participantTable = tournamentState.participant
+
+                    const idNameMap = participantTable.reduce((map,participant) => {
+                        map[participant.id] = participant.name;
+                        return map;
+                    },{})
+
+                    console.log(idNameMap)
+
+                    const formData2 = {
+                        t_id: tournamentData.id,
+                        t_state: tournamentState,
+                        p_idMap: idNameMap,
+                    }
+                    
+                    
+
+
+
+
+
+
+
+                  }
                   console.log(response);
                   console.log(response.data);
+                  
           
                   // Redirect to another route after successful submission
-                  navigate('/userHub'); // Use the navigate function
+                  //navigate('/userHub'); // Use the navigate function - this belongs in the next axios post
                 })
                 .catch(function (response) {
                   // Handle errors
                 });
 
+            
 
 
+                //axios post to send tourney state & info to DB (tourneyID, tourneyObject, idParticipantMap)
+                //will need to create a new table in DB to store this
 
-            ClearForm();
+                //add viewer to the tournamentHub page, it will take in info from DB to populate it
+            
+
 
         };
 
@@ -75,7 +147,7 @@ const HomePage = () => {
         if (buttonClicked === 2){
             console.log('btn2');
             navigate('/createTournament')
-            ClearForm();
+
 
         };
 
