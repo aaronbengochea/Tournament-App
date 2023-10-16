@@ -104,8 +104,19 @@ const HomePage = () => {
                         t_state: tournamentState,
                         p_idMap: idNameMap,
                     }
-                    
 
+
+                    /*
+                    axios({
+                        method: 'POST',
+                        url: 'http://localhost:4000/create_tournament_object',
+                        data: formData2,
+                        config: { headers: { 'Content-Type': 'multipart/form-data' } },
+                      })
+                      .then()
+                      .catch()
+                    
+                      */
 
 
 
