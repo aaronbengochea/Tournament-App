@@ -46,7 +46,7 @@ const Viewer = ({ type }) => {
           // This is optional. You must do it before render().
           window.bracketsViewer.setParticipantImages(
             data.participant.map((participant) => ({
-              participantId: participant.id || 1,
+              participantId: participant.id,
               imageUrl: "https://github.githubassets.com/pinned-octocat.svg"
             }))
           );
@@ -89,9 +89,9 @@ const Viewer = ({ type }) => {
               },
               participantOriginPlacement: "before",
               separatedChildCountLabel: true,
-              showSlotsOrigin: true,
+              showSlotsOrigin: false,
               showLowerBracketSlotsOrigin: true,
-              highlightParticipantOnHover: true
+              highlightParticipantOnHover: true,
             }
           );
         }

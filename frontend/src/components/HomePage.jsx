@@ -48,6 +48,7 @@ const HomePage = () => {
                 config: { headers: { 'Content-Type': 'multipart/form-data' } },
               })
                 .then(async function (response) {
+                    
                   if (response.data.message === true){
                     console.log("Build Tournament Catch")
 

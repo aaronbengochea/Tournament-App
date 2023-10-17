@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Viewer } from './Viewer';
+import { MatchSlip } from './MatchSlip'
 //import { useNavigate } from 'react-router-dom';
 import { BracketsManager } from 'brackets-manager';
 import { InMemoryDatabase } from 'brackets-memory-db';
+import { MatchSlip } from './MatchSlip';
 const { helpers } = require('brackets-manager');
 
 const storage = new InMemoryDatabase();
@@ -128,6 +130,11 @@ function TournamentHub() {
 
   //build in check so that it only attempts to use Viewer when the began is set to yes
 
+  //replace began? with a state variable, replace completed with a state variable
+  //delete current round
+
+  //can take the logic out and create functions in other subcomponents, then pass the subcomponent our main
+  //pages state via an injection in the html; refer to youtube video
   return (
     <div className="TournamentHub">
       <h2>Tournament Hub</h2>
@@ -138,7 +145,7 @@ function TournamentHub() {
       <p>Elimination Type: {tournamentInfo.elimination_type}</p>
       <p>Admin: {createdByGamertag}</p>
       <p>Capacity: {players.length}/{tournamentInfo.player_total}</p>
-      <p>Began? {tournamentInfo.began === 0 ? 'No' : 'Yes'}</p>
+      <p>Began? {tournamentInfo.began === 0 ? 'No' : 'Yes'}</p> 
       <p>Completed? {tournamentInfo.completed === 0 ? 'No' : 'Yes'} </p>
       <p>Invite Only? {tournamentInfo.invite_only}</p>
       <p>Current Round: </p>
@@ -161,6 +168,11 @@ function TournamentHub() {
         
         {tournamentInfo.began === 1 && <Viewer/>}
       </div>
+      <div>
+        
+        {tournamentInfo.began === 1 && <MatchSlip/>}
+      </div>
+
     </div>
   );
 }

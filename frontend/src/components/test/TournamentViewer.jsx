@@ -27,6 +27,7 @@ const TournamentBracketsEditor = ({ type }) => {
         
         //Currently updating matches via click, we will need to use some form of getter to obtain match.id's corresponding to the user
         // window.bracketsViewer.onMatchClicked = async (match) => {
+        
         window.bracketsViewer.onMatchClicked = async (match) => {
           console.log("A match was clicked", match);
     
