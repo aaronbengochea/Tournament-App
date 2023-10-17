@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import "brackets-viewer/dist/brackets-viewer.min.css";
 import "brackets-viewer/dist/brackets-viewer.min.js";
-import "./tvs.css";
+import "./test/tvs.css";
 
 
 

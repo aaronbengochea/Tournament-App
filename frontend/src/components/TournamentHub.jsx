@@ -144,7 +144,7 @@ function TournamentHub() {
       <p>Current Round: </p>
       {showAdminButton && (
         <button onClick={handleAdminForceStart}>
-          Admin Button
+          Tournament Force Start
         </button>
       )}
       <p></p>
