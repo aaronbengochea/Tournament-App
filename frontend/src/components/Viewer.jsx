@@ -5,7 +5,7 @@ import "brackets-viewer/dist/brackets-viewer.min.css";
 import "brackets-viewer/dist/brackets-viewer.min.js";
 import "./tvs.css";
 
-const { helpers } = require('brackets-manager');
+
 
 const Viewer = ({ type }) => {
     const [data, setData] = useState();
