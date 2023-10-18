@@ -17,7 +17,6 @@ function TournamentHub() {
   const [createdByUserID, setCreatedByUserID] = useState()
   const [localStoreID, setLocalStoreID] = useState()
 
-  const [tournamentStateObject, setTournamentStateObject] = useState()
   const [createdByGamertag, setCreatedByGamertag] = useState()
   const [showAdminButton, setShowAdminButton] = useState(false)
   //const navigate = useNavigate();
@@ -59,7 +58,6 @@ function TournamentHub() {
     }
 
     const tournamentState = await manager.get.stageData(0)
-    setTournamentStateObject()
     
     console.log(tournamentState)
 
