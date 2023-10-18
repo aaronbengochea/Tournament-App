@@ -5,7 +5,6 @@ import { MatchSlip } from './MatchSlip'
 //import { useNavigate } from 'react-router-dom';
 import { BracketsManager } from 'brackets-manager';
 import { InMemoryDatabase } from 'brackets-memory-db';
-import { MatchSlip } from './MatchSlip';
 const { helpers } = require('brackets-manager');
 
 const storage = new InMemoryDatabase();
@@ -15,9 +14,11 @@ function TournamentHub() {
 
   const [players, setPlayers] = useState([])
   const [tournamentInfo, setTournamentInfo] = useState([])
-  const [createdByUserID, setCreatedByUserID] = useState(null)
-  const [createdByGamertag, setCreatedByGamertag] = useState(null)
+  const [createdByUserID, setCreatedByUserID] = useState()
   const [localStoreID, setLocalStoreID] = useState()
+
+  const [tournamentStateObject, setTournamentStateObject] = useState()
+  const [createdByGamertag, setCreatedByGamertag] = useState()
   const [showAdminButton, setShowAdminButton] = useState(false)
   //const navigate = useNavigate();
   
@@ -58,6 +59,8 @@ function TournamentHub() {
     }
 
     const tournamentState = await manager.get.stageData(0)
+    setTournamentStateObject()
+    
     console.log(tournamentState)
 
 
@@ -88,8 +91,7 @@ function TournamentHub() {
         window.location.reload();
     })
     .catch()
-    
-}
+  }
 
   useEffect(() => {
     const localStoreID = localStorage.getItem('userID');
@@ -170,7 +172,7 @@ function TournamentHub() {
       </div>
       <div>
         
-        {tournamentInfo.began === 1 && <MatchSlip/>}
+        {tournamentInfo.began === 1 && <MatchSlip tInfo={tournamentInfo} playerList={players}/>}
       </div>
 
     </div>
