@@ -33,18 +33,16 @@ const TournamentBracketsEditor = ({ type }) => {
     
           try {
             await manager.update.match({
-              id: 3,
+              id: match.id,
               opponent1: { score: 5 },
               opponent2: { score: 7, result: "win" }
             });
 
-            await manager.update.match({
-                id: 3,
-                opponent1: { score: 7, result: "win"  },
-                opponent2: { score: 5}
-              });
+
             //const tourneyData2 = await manager.get.currentMatches(0);
             const tourneyData = await manager.get.stageData(0);
+            const currentRound = await manager.get.currentRound(0)
+            console.log("currentRound: ", currentRound)
             
             setData(tourneyData);
             console.log("getLoser helper: ", helpers.getLoser(tourneyData.match[3]))
