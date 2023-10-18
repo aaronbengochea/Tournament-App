@@ -10,6 +10,7 @@ import "./test/tvs.css";
 const Viewer = ({ type }) => {
     const [data, setData] = useState();
 
+    //the viewer can take in the tournament state from the parent component via props
     useEffect(() => {
         const localClickedTournamentID = localStorage.getItem('clickedTournamentID')
     
