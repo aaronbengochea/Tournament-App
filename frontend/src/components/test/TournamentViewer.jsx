@@ -32,10 +32,15 @@ const TournamentBracketsEditor = ({ type }) => {
           console.log("A match was clicked", match);
     
           try {
+
+
+            const tourneyData2 = await manager.get.stageData(0)
+            const participants = tourneyData2.participant
+
             await manager.update.match({
               id: match.id,
-              opponent1: { score: 5 },
-              opponent2: { score: 7, result: "win" }
+              opponent1: { score: 5, name: "Aaron"},
+              opponent2: { score: 7, result: "win", name: "Bubba" }
             });
 
 
@@ -43,9 +48,10 @@ const TournamentBracketsEditor = ({ type }) => {
             const tourneyData = await manager.get.stageData(0);
             const currentRound = await manager.get.currentRound(0)
             console.log("currentRound: ", currentRound)
+            console.log(tourneyData)
 
             setData(tourneyData);
-            console.log(helpers.findParticipant(tourneyData.participant,1))
+            //console.log(helpers.findParticipant(tourneyData.participant,1))
             const seeding = await manager.get.seeding(0)
 
             console.log(seeding)
