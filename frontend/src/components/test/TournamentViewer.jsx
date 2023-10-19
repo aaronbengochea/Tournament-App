@@ -43,12 +43,17 @@ const TournamentBracketsEditor = ({ type }) => {
             const tourneyData = await manager.get.stageData(0);
             const currentRound = await manager.get.currentRound(0)
             console.log("currentRound: ", currentRound)
-            
+
             setData(tourneyData);
-            console.log("getLoser helper: ", helpers.getLoser(tourneyData.match[3]))
+            console.log(helpers.findParticipant(tourneyData.participant,1))
+            const seeding = await manager.get.seeding(0)
+
+            console.log(seeding)
             
-            console.log("balanceByes helper: ", helpers.balanceByes(participants2,size2))
-            console.log("findPosition: ", helpers.findPosition(tourneyData.match,3))
+            console.log("getLoser helper: ", helpers.getLoser(tourneyData.match[3])) //gets loser of a certain match
+            
+            console.log("balanceByes helper: ", helpers.balanceByes(participants2,size2)) //balance a list of players and nulls (byes)
+            console.log("findPosition: ", helpers.findPosition(tourneyData.match,3)) //find who is in a certain position
             const newSeed = helpers.extractParticipantsFromSeeding(0,participants2)
             console.log("extractParticipantsFromSeed: ", newSeed )
             //console.log("A tourney", tourneyData2);
