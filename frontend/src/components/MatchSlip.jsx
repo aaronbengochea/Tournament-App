@@ -50,15 +50,13 @@ const  MatchSlip = (props) => {
         const currentRound = await manager.get.currentRound(tournamentID)
         const currentMatches = await manager.get.currentMatches(tournamentID)
         const seeding = await manager.get.seeding(tournamentID)
-        const matchGames = await manager.get.matchGames(currentStage.match)
 
         console.log("match slip")
         console.log(data)
         console.log(currentStage)
+        console.log(currentRound)
         console.log(currentMatches)
         console.log(seeding)
-        console.log(matchGames)
-        console.log(currentRound)
 
         }
         //console.log(data)
