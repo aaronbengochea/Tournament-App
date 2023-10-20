@@ -35,19 +35,34 @@ const TournamentBracketsEditor = ({ type }) => {
 
 
             const tourneyData2 = await manager.get.stageData(0)
-            const participants = tourneyData2.participant
+            const currentRound = await manager.get.currentRound(0)
+            const participantArray = tourneyData2.participant
+            const matchArray = tourneyData2.match
+            const currentRoundMatchArray = matchArray.filter(match => match.round_id === currentRound.id)
 
+            const idNameMap = participantArray.reduce((map, participant) => {
+              map[participant.id] = participant.name
+              return map;
+            },[])
+
+            console.log("currentRound: ", currentRound)
+            console.log("idNameMap: ", idNameMap)
+
+            console.log("currentRoundMatchArray: ", currentRoundMatchArray)
+
+
+            if (currentRound.id === 0) {
             await manager.update.match({
               id: match.id,
               opponent1: { score: 5, name: "Aaron"},
               opponent2: { score: 7, result: "win", name: "Bubba" }
             });
-
+          }
+            console.log("currentRound: ", currentRound)
 
             //const tourneyData2 = await manager.get.currentMatches(0);
             const tourneyData = await manager.get.stageData(0);
-            const currentRound = await manager.get.currentRound(0)
-            console.log("currentRound: ", currentRound)
+
             console.log(tourneyData)
 
             setData(tourneyData);
