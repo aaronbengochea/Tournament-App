@@ -16,7 +16,7 @@ const TournamentBracketsEditor = ({ type }) => {
     const [data, setData] = useState();
 
     const size = 8 //we can import this
-    const participants = ["1","Aaron","Cicy", "4", "5", "6", "7", "8"] //we can put gamertags here
+    const participants = ["1","Aaron","Cicy", "chichi", "5", "6", "7", "8"] //we can put gamertags here
 
     const size2 = 16 //we can import this
     const participants2 = ["1", null, "Aaron", null, "Cicy", null, "4", null, "5",null, "6",null, "7",null, "8", "9"]
@@ -33,7 +33,7 @@ const TournamentBracketsEditor = ({ type }) => {
     
           try {
 
-
+            
             const tourneyData2 = await manager.get.stageData(0)
             const currentRound = await manager.get.currentRound(0)
             const participantArray = tourneyData2.participant
@@ -45,6 +45,39 @@ const TournamentBracketsEditor = ({ type }) => {
               return map;
             },[])
 
+            const localGamertag = localStorage.getItem('userGamerTag')
+            let userObjectID = null
+            let opponentObjectID = null
+            let findUserMatch = null
+
+            for (const id in idNameMap) {
+              if (idNameMap[id] === localGamertag) {
+                userObjectID = +id;
+                break;
+              }
+            }
+
+            if (userObjectID !== null) {
+              for (const match of currentRoundMatchArray) {
+                if (match.opponent1.id === userObjectID || match.opponent2.id === userObjectID){
+                  if (match.opponent1.id === userObjectID){
+                    opponentObjectID = match.opponent2.id;
+                    findUserMatch = match;
+                  } else {
+                    opponentObjectID = match.opponent1.id;
+                    findUserMatch = match;
+                  }
+                  break
+                }
+              }
+            }
+
+
+            console.log(localGamertag)
+            console.log("userTourneyID: ",  userObjectID)
+            console.log("opponentTourneyID:", opponentObjectID)
+            console.log("opponentName: ", idNameMap[opponentObjectID])
+            console.log("userCurrentMatch: ", findUserMatch)
             console.log("currentRound: ", currentRound)
             console.log("idNameMap: ", idNameMap)
 
@@ -72,11 +105,13 @@ const TournamentBracketsEditor = ({ type }) => {
             console.log(seeding)
             
             console.log("getLoser helper: ", helpers.getLoser(tourneyData.match[3])) //gets loser of a certain match
-            
-            console.log("balanceByes helper: ", helpers.balanceByes(participants2,size2)) //balance a list of players and nulls (byes)
             console.log("findPosition: ", helpers.findPosition(tourneyData.match,3)) //find who is in a certain position
-            const newSeed = helpers.extractParticipantsFromSeeding(0,participants2)
+            const newSeed = helpers.extractParticipantsFromSeeding(0,participants)           
+            
+            //use these to test larger bracket
+            //console.log("balanceByes helper: ", helpers.balanceByes(participants2,size2)) //balance a list of players and nulls (byes)
             console.log("extractParticipantsFromSeed: ", newSeed )
+            
             //console.log("A tourney", tourneyData2);
             //console.log("A Stage: ", tourneyData)
             // console.log(tourneyData);
