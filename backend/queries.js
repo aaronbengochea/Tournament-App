@@ -223,9 +223,11 @@ async function getTournamentObject(req,res){
     const retrieveStateResult = await pool.query(retriveStateQuery,[tournamentID])
 
     const tournamentState = retrieveStateResult.rows[0].tournament_state
+    const playerScoreMap = retrieveStateResult.rows[0].player_score_map
 
 
-    res.status(200).json({tournamentState});
+
+    res.status(200).json({tournamentState, playerScoreMap});
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Server Error' });
