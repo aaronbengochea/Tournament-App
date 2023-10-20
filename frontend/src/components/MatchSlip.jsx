@@ -10,6 +10,7 @@ const  MatchSlip = (props) => {
     //take tourney object and feed it to bracket manager
     //use manager.get.currentRound --> will need tourney id (0) to fetch stage, will need stage.id to fetch matches
     const [data, setData] = useState()
+    const [playerScoreMap, setPlayerScoreMap] = useState()
     //const manager = new BracketsManager(data);
 
     
@@ -30,7 +31,9 @@ const  MatchSlip = (props) => {
             })
             .then(res => {
                 const data = res.data.tournamentState
+                const scoreMap = res.data.playerScoreMap
                 setData(data)
+                setPlayerScoreMap(scoreMap)
             })
             .catch(err => {
                 console.error("error occured")
@@ -53,6 +56,7 @@ const  MatchSlip = (props) => {
 
         console.log("match slip")
         console.log(data)
+        console.log(playerScoreMap)
         console.log(currentStage)
         console.log(currentRound)
         console.log(currentMatches)
