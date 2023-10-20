@@ -40,6 +40,8 @@ const TournamentBracketsEditor = ({ type }) => {
             const matchArray = tourneyData2.match
             const currentRoundMatchArray = matchArray.filter(match => match.round_id === currentRound.id)
 
+            
+
             const idNameMap = participantArray.reduce((map, participant) => {
               map[participant.id] = participant.name
               return map;
@@ -71,12 +73,29 @@ const TournamentBracketsEditor = ({ type }) => {
                 }
               }
             }
+            
+            const roundCount = tourneyData2.round.length
+            let roundName = null
+
+            
+            if (currentRound.id === tourneyData2.round[roundCount-1].id){
+              roundName = "Final Round"
+            } else if (currentRound.id === tourneyData2.round[roundCount-2].id) {
+              roundName = "Semi Finals"
+            } else if (currentRound.id === tourneyData2.round[roundCount-3].id) {
+              roundName = "Quarter Finals"
+            } else {
+              roundName = "Round 1"
+            }
+            
 
 
             console.log(localGamertag)
             console.log("userTourneyID: ",  userObjectID)
             console.log("opponentTourneyID:", opponentObjectID)
             console.log("opponentName: ", idNameMap[opponentObjectID])
+            console.log("Round Number: ", currentRound.id)
+            console.log("currentRoundName: ", roundName)
             console.log("userCurrentMatch: ", findUserMatch)
             console.log("currentRound: ", currentRound)
             console.log("idNameMap: ", idNameMap)
