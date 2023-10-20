@@ -186,11 +186,11 @@ async function tournamentHubLoader(req,res){
 }
 
 const createTournamentObject = (req,res) => {
-  const {t_id, t_state, p_idMap} = req.body
+  const {t_id, t_state, p_idMap, p_scoreMap} = req.body
 
   pool.query(
-    'INSERT INTO t_state (tournament_id, tournament_state, player_id_map) VALUES ($1, $2, $3) RETURNING *',
-    [t_id, t_state, p_idMap],
+    'INSERT INTO t_state (tournament_id, tournament_state, player_id_map, player_score_map) VALUES ($1, $2, $3, $4) RETURNING *',
+    [t_id, t_state, p_idMap, p_scoreMap],
     (error, results) => {
       if (error) {
         throw error
@@ -198,6 +198,7 @@ const createTournamentObject = (req,res) => {
       const tournamentID = results.rows[0].tournament_id;
       const tournamentState = results.rows[0].tournament_state;
       const playerIDMap = results.rows[0].player_id_map;
+      const playerScoreMap = results.rows[0].player_score_map;
 
       pool.query(
         'UPDATE tournaments SET began = 1 WHERE id = $1',
@@ -207,7 +208,7 @@ const createTournamentObject = (req,res) => {
             console.error("Error updating the began field")
             res.status(500).json({error: "Internal Service Error"})
           } else {
-            res.status(201).json({tournamentID, tournamentState, playerIDMap});
+            res.status(201).json({tournamentID, tournamentState, playerIDMap, playerScoreMap});
           }
         }
       ) 
