@@ -71,11 +71,19 @@ function TournamentHub() {
 
     console.log(idNameMap)
 
+    const playerScoreMap = {}
+
+    participantTable.forEach(participant => {
+      playerScoreMap[participant.name] = null;
+    })
+
     
     const formData2 = {
       t_id: tournamentInfo.id,
       t_state: tournamentState,
       p_idMap: idNameMap,
+      p_scoreMap: playerScoreMap,
+
     }
 
     axios({
