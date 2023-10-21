@@ -73,6 +73,32 @@ const TournamentBracketsEditor = ({ type }) => {
                 }
               }
             }
+
+            const playerScoreMap = {
+
+              scores: participantArray.map(participant => ({
+                  name: participant.name,
+                  score: null
+              }))
+            }
+
+            const playerScoreMapObjects = playerScoreMap.scores
+
+            let playerScore = 0
+            
+            for (const row of playerScoreMapObjects) {
+              console.log(row.name, localGamertag, row.name === localGamertag)
+              if (row.name === localGamertag){
+                console.log("setting playerScore")
+                playerScore = row.score;      
+              }
+              
+            }
+            
+            
+            console.log(playerScoreMapObjects)
+            console.log(currentRoundMatchArray)
+
             
             const roundCount = tourneyData2.round.length
             let roundName = null
@@ -99,6 +125,8 @@ const TournamentBracketsEditor = ({ type }) => {
             console.log("userCurrentMatch: ", findUserMatch)
             console.log("currentRound: ", currentRound)
             console.log("idNameMap: ", idNameMap)
+            console.log("playerScoreMap: ", playerScoreMap)
+            console.log("localUserReportedScore", playerScore)
 
             console.log("currentRoundMatchArray: ", currentRoundMatchArray)
 
