@@ -71,10 +71,8 @@ function TournamentHub() {
 
     console.log(idNameMap)
 
-    const playerScoreMap = {}
-
-    participantTable.forEach(participant => {
-      playerScoreMap[participant.name] = null;
+    const playerScoreMap = participantTable.map(participant => {
+      return {name: participant.name, score: null}
     })
 
     
