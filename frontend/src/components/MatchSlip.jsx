@@ -56,7 +56,7 @@ const  MatchSlip = (props) => {
 
         console.log("match slip")
         console.log(data)
-        console.log(playerScoreMap)
+        //console.log(playerScoreMap.abeng)
         console.log(currentStage)
         console.log(currentRound)
         console.log(currentMatches)
