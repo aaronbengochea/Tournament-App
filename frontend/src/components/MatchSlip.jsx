@@ -76,7 +76,7 @@ const  MatchSlip = (props) => {
             }
 
             if (userObjectID !== null) {
-                for (const match of currentRoundMatchArray) {
+                for (const match of currentMatches) {
                   if (match.opponent1.id === userObjectID || match.opponent2.id === userObjectID){
                     if (match.opponent1.id === userObjectID){
                       opponentObjectID = match.opponent2.id;
@@ -105,7 +105,7 @@ const  MatchSlip = (props) => {
               }
               
             }
-            
+
             
 
             console.log("match slip")
