@@ -64,16 +64,19 @@ function TournamentHub() {
 
     const participantTable = tournamentState.participant
 
-    const idNameMap = participantTable.reduce((map,participant) => {
-      map[participant.id] = participant.name;
-      return map;
-    },{})
+    const idNameMap = {
+      playerData: participantTable.map(participant => ({
+          name: participant.name,
+          id: participant.id
+      }))
+  }
 
-    console.log(idNameMap)
-
-    const playerScoreMap = participantTable.map(participant => {
-      return {name: participant.name, score: null}
-    })
+    const playerScoreMap = {
+      scores: participantTable.map(participant => ({
+          name: participant.name,
+          score: null
+      }))
+  }
 
     
     const formData2 = {
