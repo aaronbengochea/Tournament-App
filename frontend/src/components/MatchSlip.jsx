@@ -41,26 +41,86 @@ const  MatchSlip = (props) => {
     }
 
     const printData = async () => {
+
+        
         if (data) {
 
-        const storage = new InMemoryDatabase();
-        const manager = new BracketsManager(storage);
-        const tournamentID = 0
-        
-        await manager.import(data)
-        const currentStage = await manager.get.stageData(tournamentID)
+            const storage = new InMemoryDatabase();
+            const manager = new BracketsManager(storage);
+            const tournamentID = 0
+            
+            await manager.import(data)
+            const currentStage = await manager.get.stageData(tournamentID)
+            const currentRound = await manager.get.currentRound(tournamentID)
+            const currentMatches = await manager.get.currentMatches(tournamentID)
+            const seeding = await manager.get.seeding(tournamentID)
 
-        const currentRound = await manager.get.currentRound(tournamentID)
-        const currentMatches = await manager.get.currentMatches(tournamentID)
-        const seeding = await manager.get.seeding(tournamentID)
+            const participantArray = currentStage.participant
+            
 
-        console.log("match slip")
-        console.log(data)
-        //console.log(playerScoreMap.abeng)
-        console.log(currentStage)
-        console.log(currentRound)
-        console.log(currentMatches)
-        console.log(seeding)
+            const idNameMap = participantArray.reduce((map, participant) => {
+                map[participant.id] = participant.name
+                return map;
+            },[])
+
+            const localGamertag = localStorage.getItem('userGamerTag')
+            let userObjectID = null
+            let opponentObjectID = null
+            let findUserMatch = null
+
+            for (const id in idNameMap) {
+                if (idNameMap[id] === localGamertag) {
+                  userObjectID = +id;
+                  break;
+                }
+            }
+
+            if (userObjectID !== null) {
+                for (const match of currentRoundMatchArray) {
+                  if (match.opponent1.id === userObjectID || match.opponent2.id === userObjectID){
+                    if (match.opponent1.id === userObjectID){
+                      opponentObjectID = match.opponent2.id;
+                      findUserMatch = match;
+                    } else {
+                      opponentObjectID = match.opponent1.id;
+                      findUserMatch = match;
+                    }
+                    break
+                  }
+                }
+            }
+
+            
+
+            const playerScoreMapObjects = playerScoreMap.scores
+
+            let playerScore = 0
+            
+            for (const row of playerScoreMapObjects) {
+              console.log(row.name, localGamertag, row.name === localGamertag)
+              if (row.name === localGamertag){
+                console.log("setting playerScore")
+                playerScore = row.score;
+                break   
+              }
+              
+            }
+            
+            
+
+            console.log("match slip")
+
+
+            console.log(data)
+            //console.log(playerScoreMap.abeng)
+            console.log(currentStage)
+            console.log(currentRound)
+            console.log(currentMatches)
+            console.log(seeding)
+
+            
+
+
 
         }
         //console.log(data)
@@ -83,7 +143,8 @@ const  MatchSlip = (props) => {
     return (
         <div className="FormCenter">
             <p>Match Slip</p>
-            
+            <p>Current Round</p>
+            <p>Opponent:</p>
             
         </div>
     );
