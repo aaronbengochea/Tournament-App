@@ -16,7 +16,9 @@ const  MatchSlip = (props) => {
     const [currentOpponentID, setCurrentOpponentID] = useState()
     const [userTournamentID, setUserTournamentID] = useState()
     const [showRoundScoreSubmitButton, setShowRoundScoreSubmitButton] = useState(false)
+    const [showRoundScoreSubmitResults, setShowRoundScoreSubmitResults] = useState(false)
     const [userReportedScore, setUserReportedScore] = useState('')
+    const [opponentReportedScore, setOpponentReportedScore] = useState('')
     //const manager = new BracketsManager(data);
 
     
@@ -113,16 +115,37 @@ const  MatchSlip = (props) => {
             //finding user score, if null then take response (reveal field box) else display score and dont give option to submit again
             const playerScoreMapObjects = playerScoreMap.scores
 
-            let playerScore = 0
+            let userScore = 0
+            let opponentScore = 0
             
             for (const row of playerScoreMapObjects) {
               if (row.name === localGamertag){
-                console.log("setting playerScore")
-                playerScore = row.score;
+                console.log("setting userScore")
+                userScore = row.score;
+                if (userScore !== null) {
+                    setUserReportedScore(userScore)
+                }
                 break   
-              }
-              
+              } 
             }
+
+            for (const row of playerScoreMapObjects) {
+                if (row.name === opponentObjectName){
+                  console.log("setting opponentScore")
+                  opponentScore = row.score;
+                  if (opponentScore !== null){
+                    setOpponentReportedScore(opponentScore)
+                  }
+                  break   
+                } 
+              }
+
+            if (userScore === null){
+                setShowRoundScoreSubmitButton(true)
+            } else {
+                setShowRoundScoreSubmitResults(true)
+            }
+
 
 
 
@@ -144,14 +167,12 @@ const  MatchSlip = (props) => {
 
             setCurrentRound(roundName)
 
-            if (playerScore === null){
-                setShowRoundScoreSubmitButton(true)
-            }
+
+
 
 
             console.log("match slip")
             console.log(data)
-            //console.log(playerScoreMap.abeng)
             console.log(currentStage)
             console.log(currentRound)
             console.log(currentMatches)
@@ -160,7 +181,7 @@ const  MatchSlip = (props) => {
             console.log(opponentObjectName)
             console.log(opponentObjectID)
             console.log(findUserMatch)
-            console.log(playerScore)
+            console.log(userScore)
             console.log(roundName)
             console.log(playerScoreMap)
 
@@ -197,6 +218,7 @@ const  MatchSlip = (props) => {
 
         setPlayerScoreMap(p_scoreMap)
         setShowRoundScoreSubmitButton(false)
+        setShowRoundScoreSubmitResults(true)
     }
 
     useEffect(() => {
@@ -233,9 +255,15 @@ const  MatchSlip = (props) => {
                     </div>
                 </form>
             </div>
-            
             )}
-            
+            {showRoundScoreSubmitResults && (
+                <div>
+                <p>Submitted Score: {userReportedScore}</p>
+                <p>Opponent Submitted Score: {opponentReportedScore === '' ? "Pending" : opponentReportedScore}</p>
+                <p></p>
+                <p>Waiting for Admin to progress the tournament! Please stay tuned</p>
+                </div>
+            )}
         </div>
     );
 }
