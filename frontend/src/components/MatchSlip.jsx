@@ -41,7 +41,7 @@ const  MatchSlip = (props) => {
             .then(res => {
                 const data = res.data.tournamentState
                 const scoreMap = res.data.playerScoreMap
-                const tournamentID = res.data.tournament_id
+                const tournamentID = res.data.currentTournamentID
                 setData(data)
                 setPlayerScoreMap(scoreMap)
                 setTournamentID(tournamentID)
@@ -199,7 +199,7 @@ const  MatchSlip = (props) => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         if (name === 'reportedScore') {
-            setUserReportedScore(value);
+            setUserReportedScore(+value);
         }   
     };
 
@@ -227,8 +227,12 @@ const  MatchSlip = (props) => {
             playerScoreMap: p_scoreMap,
         }
 
+        console.log(tournamentID, typeof tournamentID)
+
         axios.post('http://localhost:4000/update_reported_round_scores', formData)
-        .then()
+        .then(function (res) {
+            console.log(res)
+        })
     }
 
     useEffect(() => {
