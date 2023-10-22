@@ -224,14 +224,34 @@ async function getTournamentObject(req,res){
 
     const tournamentState = retrieveStateResult.rows[0].tournament_state
     const playerScoreMap = retrieveStateResult.rows[0].player_score_map
+    const currentTournamentID = retrieveStateResult.rows[0].tournament_id
 
 
 
-    res.status(200).json({tournamentState, playerScoreMap});
+    res.status(200).json({tournamentState, playerScoreMap, currentTournamentID});
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Server Error' });
     }
+}
+
+async function updateReportedRoundScores(req,res) {
+  try{
+    const {tournamentID, playerScoreMap} = req.body
+
+    const updatePlayerScoreStateQuery = 'UPDATE t_state SET player_score_map = $1 WHERE tournament_id = $2'
+    const updatePlayerScoreStateResult = await pool.query(updatePlayerScoreStateQuery,[playerScoreMap,tournamentID])
+
+    const retrieveUpdatedTourneyStateInfoQuery = 'SELECT * FROM t_state WHERE tournament_id = $1'
+    const retrieveUpdatedTourneyStateInfoQueryResults = await pool.query(retrieveUpdatedTourneyStateInfoQuery,[tournamentID])
+
+    const updatedPlayerScoreMap = retrieveUpdatedTourneyStateInfoQueryResults.rows[0].player_score_map
+
+    res.status(200).json({updatedPlayerScoreMap})
+  } catch (error){
+    console.error(error)
+    res.status(500).json({message: 'Server Error'})
+  }
 }
 
 
@@ -246,6 +266,6 @@ module.exports = {
   tournamentHubLoader,
   createTournamentObject,
   getTournamentObject,
-
+  updateReportedRoundScores,
 
 }
