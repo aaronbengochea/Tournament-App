@@ -16,6 +16,7 @@ app.get('/active_tournaments',db.activeTournamentCheck)
 app.get('/tournament_loader', db.tournamentHubLoader)
 app.post('/create_tournament_object',db.createTournamentObject)
 app.get('/get_tournament_object', db.getTournamentObject)
+app.post('/update_reported_round_scores', db.updateReportedRoundScores)
 
 
 app.get('/backend_check', (req,res) => {
