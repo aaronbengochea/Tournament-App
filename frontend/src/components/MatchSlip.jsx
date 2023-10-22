@@ -11,6 +11,7 @@ const  MatchSlip = (props) => {
     //use manager.get.currentRound --> will need tourney id (0) to fetch stage, will need stage.id to fetch matches
     const [data, setData] = useState()
     const [playerScoreMap, setPlayerScoreMap] = useState()
+    const [tournamentID, setTournamentID] = useState()
     const [currentRound, setCurrentRound] = useState()
     const [currentOpponentName, setCurrentOpponentName] = useState()
     const [currentOpponentID, setCurrentOpponentID] = useState()
@@ -40,8 +41,10 @@ const  MatchSlip = (props) => {
             .then(res => {
                 const data = res.data.tournamentState
                 const scoreMap = res.data.playerScoreMap
+                const tournamentID = res.data.tournament_id
                 setData(data)
                 setPlayerScoreMap(scoreMap)
+                setTournamentID(tournamentID)
             })
             .catch(err => {
                 console.error("error occured")
@@ -206,7 +209,6 @@ const  MatchSlip = (props) => {
         const localGamertag = localStorage.getItem('userGamerTag')
 
         let p_scoreMap = playerScoreMap
-        console.log(playerScoreMap)
 
         for (const row of p_scoreMap.scores) {
             if (row.name === localGamertag){
@@ -219,6 +221,14 @@ const  MatchSlip = (props) => {
         setPlayerScoreMap(p_scoreMap)
         setShowRoundScoreSubmitButton(false)
         setShowRoundScoreSubmitResults(true)
+
+        const formData = {
+            tournamentID: tournamentID,
+            playerScoreMap: p_scoreMap,
+        }
+
+        axios.post('http://localhost:4000/update_reported_round_scores', formData)
+        .then()
     }
 
     useEffect(() => {
