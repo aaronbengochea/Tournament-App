@@ -156,7 +156,7 @@ const  MatchSlip = (props) => {
             const roundCount = currentStage.round.length
             let roundName = null
 
-            //update
+            
 
             
             if (currentRound.id === currentStage.round[roundCount-1].id){
