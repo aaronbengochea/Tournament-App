@@ -90,6 +90,8 @@ const  MatchSlip = (props) => {
                 }
             }
 
+            //need to create a catch for byes, currentMatches doesnt capture byes. we need a way to check whether or not a bye has taken place
+
             
             if (userObjectID !== null) {
                 for (const match of currentMatches) {
