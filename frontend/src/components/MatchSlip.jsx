@@ -129,6 +129,12 @@ const  MatchSlip = (props) => {
                 }
             }
 
+            if (opponentObjectID === null && findUserMatch === null){
+                setUserReportedScore(0)
+                setOpponentReportedScore("BYE")
+                setCurrentOpponentName("BYE")
+            }
+
             //finding user score, if null then take response (reveal field box) else display score and dont give option to submit again
             const playerScoreMapObjects = playerScoreMap.scores
 
@@ -157,7 +163,7 @@ const  MatchSlip = (props) => {
                 } 
               }
 
-            if (userScore === null){
+            if (userScore === null && opponentObjectID !== null){
                 setShowRoundScoreSubmitButton(true)
             } else {
                 setShowRoundScoreSubmitResults(true)

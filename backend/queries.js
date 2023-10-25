@@ -1,4 +1,4 @@
-const pool = require('./dbConfig')
+const pool = require('./dbconfig')
 
 const createUser = (req,res) => {
   const {gamerTag, email, password} = req.body
