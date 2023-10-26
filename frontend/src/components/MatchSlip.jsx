@@ -102,9 +102,9 @@ const  MatchSlip = (props) => {
                 }
             }
 
-            //need to create a catch for byes, currentMatches doesnt capture byes. we need a way to check whether or not a bye has taken place
-
             
+
+            //This section finds and sets opponent information
             if (userObjectID !== null) {
                 for (const match of currentMatches) {
                   if (match.opponent1.id === userObjectID || match.opponent2.id === userObjectID){
@@ -129,13 +129,14 @@ const  MatchSlip = (props) => {
                 }
             }
 
+            //This means that the user recieved a BYE
             if (opponentObjectID === null && findUserMatch === null){
                 setUserReportedScore(0)
                 setOpponentReportedScore("BYE")
                 setCurrentOpponentName("BYE")
             }
 
-            //finding user score, if null then take response (reveal field box) else display score and dont give option to submit again
+            //Finding user and opponent reported scores from db query 
             const playerScoreMapObjects = playerScoreMap.scores
 
             let userScore = 0
@@ -163,6 +164,7 @@ const  MatchSlip = (props) => {
                 } 
               }
 
+            //When user has not submitted a score and a valid opponent object exists: reveal score submission field
             if (userScore === null && opponentObjectID !== null){
                 setShowRoundScoreSubmitButton(true)
             } else {
@@ -177,7 +179,7 @@ const  MatchSlip = (props) => {
             let roundName = null
 
             
-
+            //Will need to update this code, it presents issues for 2 round tournaments
             
             if (currentRound.id === currentStage.round[roundCount-1].id){
               roundName = "Final Round"
