@@ -273,7 +273,7 @@ const  MatchSlip = (props) => {
 
     return (
         <div className="FormCenter">
-            <p>Match Slip</p>
+            <h3>Match Slip</h3>
             <p>Current Round: {currentRound}</p>
             <p>Opponent: {currentOpponentName}</p>
             {showRoundScoreSubmitButton && (
