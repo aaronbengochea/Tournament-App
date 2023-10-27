@@ -164,7 +164,7 @@ const  MatchSlip = (props) => {
                 } 
               }
 
-            //When user has not submitted a score and a valid opponent object exists: reveal score submission field
+            //When user has not submitted a score and a valid opponent object exists: reveal score submission 
             if (userScore === null && opponentObjectID !== null){
                 setShowRoundScoreSubmitButton(true)
             } else {
