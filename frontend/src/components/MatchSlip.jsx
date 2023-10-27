@@ -196,7 +196,7 @@ const  MatchSlip = (props) => {
 
 
 
-
+            //This component will also doublecheck if both players have submitted scores, check if they are valid, assign a winner and progress the tournament object
 
             console.log("match slip")
             console.log(data)
