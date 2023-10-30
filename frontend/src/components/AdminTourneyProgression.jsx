@@ -14,4 +14,9 @@ Reasons for manual progression:
 I want to incorporate auto-updating to the scoring system, so that this component only has to handle non-balanced scores
 -I will need to change the matchslip component to handle score checking on each submission, if the opponent score is non-null, then compare the two reported scores and update the tournament object with a winner using match.update function
 -I will also need to likely create a new way to handle byes as well in order to incorporate auto scoring updates
+
+I would also like to take in values from the user
+
+
+
 */
