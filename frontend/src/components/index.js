@@ -7,6 +7,7 @@ export {TournamentHub} from './TournamentHub'
 export {TournamentBracketsEditor} from './test/TournamentViewer'
 export {Viewer} from './Viewer'
 export {MatchSlip} from './MatchSlip'
+export {AdminScoreOveride} from './AdminTourneyProgression'
 
 
 
