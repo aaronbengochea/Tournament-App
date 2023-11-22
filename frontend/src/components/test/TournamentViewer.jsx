@@ -134,8 +134,8 @@ const TournamentBracketsEditor = ({ type }) => {
             if (currentRound.id === 0) {
             await manager.update.match({
               id: match.id,
-              opponent1: { score: 5, name: "Aaron"},
-              opponent2: { score: 7, result: "win", name: "Bubba" }
+              opponent1: { score: 5, name: "Aaron", result: "win"},
+              opponent2: { score: 7, name: "Bubba" }
             });
           }
             console.log("currentRound: ", currentRound)

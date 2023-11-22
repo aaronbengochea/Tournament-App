@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Viewer } from './Viewer';
 import { MatchSlip } from './MatchSlip'
+import { AdminScoreOveride } from './AdminTourneyProgression';
 //import { useNavigate } from 'react-router-dom';
 import { BracketsManager } from 'brackets-manager';
 import { InMemoryDatabase } from 'brackets-memory-db';
@@ -19,6 +20,7 @@ function TournamentHub() {
 
   const [createdByGamertag, setCreatedByGamertag] = useState()
   const [showAdminButton, setShowAdminButton] = useState(false)
+  const [showAdminOveride, setShowAdminOveride] = useState(false)
   //const navigate = useNavigate();
   
   const handleAdminForceStart = async () => {
@@ -133,6 +135,10 @@ function TournamentHub() {
         if (createdByUserID === localStoreID && tournamentInfo.began === 0) {
           setShowAdminButton(true)
         }
+
+        if (createdByUserID === localStoreID && tournamentInfo.began === 1) {
+          setShowAdminOveride(true)
+        }
       }
     }
   }, [createdByUserID, players, localStoreID, tournamentInfo]);
@@ -180,6 +186,11 @@ function TournamentHub() {
       <div>
         
         {tournamentInfo.began === 1 && <MatchSlip tInfo={tournamentInfo} playerList={players}/>}
+      </div>
+      <p></p>
+      <div>
+
+          {showAdminOveride && <AdminScoreOveride/>}
       </div>
 
     </div>
