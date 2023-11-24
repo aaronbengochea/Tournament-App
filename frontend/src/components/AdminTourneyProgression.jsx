@@ -129,6 +129,8 @@ I want to incorporate auto-updating to the scoring system, so that this componen
      }
  
      const handleSubmit = (e) => {
+        //add tourney object update methods
+        //send updated tourney object and playerScoreMap
 
      };
  
