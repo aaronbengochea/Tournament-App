@@ -43,6 +43,7 @@ I want to incorporate auto-updating to the scoring system, so that this componen
 
 
      const [scoreOveride, setScoreOveride] = useState([]);
+     const [adminScoreOveride, setAdminScoreOveride] = useState([]);
      const [matches, setMatches] = useState([]);
 
  
@@ -104,7 +105,8 @@ I want to incorporate auto-updating to the scoring system, so that this componen
                     const playerScore = nameScoreMap[playerName]
                     match.opponent1.name = playerName
                     match.opponent1.repScore = playerScore
-                    handleInputChange(matchIndex, 0, playerScore)
+                    handlePlayerReportedArray(matchIndex, 0, playerScore)
+                    handleAdminOverideArray(matchIndex,0,0)
                 }
 
                 if(idNameMap[match.opponent2.id]){
@@ -112,7 +114,8 @@ I want to incorporate auto-updating to the scoring system, so that this componen
                     const playerScore = nameScoreMap[playerName]
                     match.opponent2.name = playerName
                     match.opponent2.repScore = playerScore
-                    handleInputChange(matchIndex, 1, playerScore)
+                    handlePlayerReportedArray(matchIndex, 1, playerScore)
+                    handleAdminOverideArray(matchIndex,1,0)
                 }
 
              });
@@ -120,8 +123,15 @@ I want to incorporate auto-updating to the scoring system, so that this componen
              setMatches(currentMatches);
         };
      };
- 
-     const handleInputChange = (matchIndex, opponentIndex, value) => {
+
+     const handleAdminOverideArray = (matchIndex, opponentIndex, value) => {
+        const inputIndex = matchIndex * 2 + opponentIndex;
+        const updatedInputs = [...adminScoreOveride];
+        updatedInputs[inputIndex] = value;
+        setAdminScoreOveride(updatedInputs)
+     }
+
+     const handlePlayerReportedArray = (matchIndex, opponentIndex, value) => {
         const inputIndex = matchIndex * 2 + opponentIndex;
         const updatedInputs = [...scoreOveride];
         updatedInputs[inputIndex] = value;
@@ -160,16 +170,16 @@ I want to incorporate auto-updating to the scoring system, so that this componen
                         {match.opponent1.name} ----- Score Overide: 
                         <input
                             type="text"
-                            value={scoreOveride[matchIndex * 2] || ''}
-                            onChange={(e) => handleInputChange(matchIndex, 0, e.target.value)}
+                            value={adminScoreOveride[matchIndex * 2] || ''}
+                            onChange={(e) => handleAdminOverideArray(matchIndex, 0, e.target.value)}
                         />
                     </div>
                     <div>
                         {match.opponent2.name} ----- Score Overide: 
                         <input
                             type="text"
-                            value={scoreOveride[matchIndex * 2 + 1] || ''}
-                            onChange={(e) => handleInputChange(matchIndex, 1, e.target.value)}
+                            value={adminScoreOveride[matchIndex * 2 + 1] || ''}
+                            onChange={(e) => handleAdminOverideArray(matchIndex, 1, e.target.value)}
                         />
                     </div>
                     <hr />
