@@ -129,7 +129,7 @@ I want to incorporate auto-updating to the scoring system, so that this componen
      }
  
      const handleSubmit = (e) => {
-        //add tourney object update methods
+        //update tourney object using bracket.manager update method
         //send updated tourney object and playerScoreMap
 
      };
