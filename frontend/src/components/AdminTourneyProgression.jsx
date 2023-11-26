@@ -106,7 +106,7 @@ I want to incorporate auto-updating to the scoring system, so that this componen
                     match.opponent1.name = playerName
                     match.opponent1.repScore = playerScore
                     handlePlayerReportedArray(matchIndex, 0, playerScore)
-                    handleAdminOverideArray(matchIndex,0,0)
+                    handleAdminOverideArray(matchIndex,0,-1)
                 }
 
                 if(idNameMap[match.opponent2.id]){
@@ -115,7 +115,7 @@ I want to incorporate auto-updating to the scoring system, so that this componen
                     match.opponent2.name = playerName
                     match.opponent2.repScore = playerScore
                     handlePlayerReportedArray(matchIndex, 1, playerScore)
-                    handleAdminOverideArray(matchIndex,1,0)
+                    handleAdminOverideArray(matchIndex,1,-1)
                 }
 
              });
@@ -137,10 +137,22 @@ I want to incorporate auto-updating to the scoring system, so that this componen
         updatedInputs[inputIndex] = value;
         setScoreOveride(updatedInputs)
      }
- 
+     
+     
      const handleSubmit = (e) => {
-        //update tourney object using bracket.manager update method
-        //send updated tourney object and playerScoreMap
+        const consolidatedAdminScores = [...adminScoreOveride]
+
+        for(let i = 0; i < adminScoreOveride.length; i++){
+            if(adminScoreOveride[i] === -1){
+                consolidatedAdminScores[i] = scoreOveride[i]
+            }
+        }
+
+        //itr thru each match, update scores corresponding in consolidatedAdminScores
+        //rebuild playerScoreMap object with next rounds object
+        //send playerScoreMap, playerIDMap, tourney state object, and tourneyID for storage in db
+
+        //That completes one loop of a round.
 
      };
  
