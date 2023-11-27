@@ -98,6 +98,11 @@ I want to incorporate auto-updating to the scoring system, so that this componen
                 return scoreMap
              },[])
 
+             //sets temp arrays 
+             let playerCount = currentMatches.length * 2;
+             let adminScoreOverideTemp = Array(playerCount).fill(-1);
+             let playerScoreOverideTemp = Array(playerCount).fill(-1);
+
              currentMatches.forEach((match, matchIndex) => {
 
                 if(idNameMap[match.opponent1.id]){
@@ -105,8 +110,8 @@ I want to incorporate auto-updating to the scoring system, so that this componen
                     const playerScore = nameScoreMap[playerName]
                     match.opponent1.name = playerName
                     match.opponent1.repScore = playerScore
-                    handlePlayerReportedArray(matchIndex, 0, playerScore)
-                    handleAdminOverideArray(matchIndex,0,-1)
+                    handlePlayerReportedArray(matchIndex, 0, playerScore, playerScoreOverideTemp)
+
                 }
 
                 if(idNameMap[match.opponent2.id]){
@@ -114,12 +119,15 @@ I want to incorporate auto-updating to the scoring system, so that this componen
                     const playerScore = nameScoreMap[playerName]
                     match.opponent2.name = playerName
                     match.opponent2.repScore = playerScore
-                    handlePlayerReportedArray(matchIndex, 1, playerScore)
-                    handleAdminOverideArray(matchIndex,1,-1)
+                    handlePlayerReportedArray(matchIndex, 1, playerScore, playerScoreOverideTemp)
+
                 }
 
              });
-
+             setAdminScoreOveride(adminScoreOverideTemp)
+             console.log(adminScoreOverideTemp)
+             setScoreOveride(playerScoreOverideTemp)
+             console.log(playerScoreOverideTemp)
              setMatches(currentMatches);
         };
      };
@@ -131,22 +139,22 @@ I want to incorporate auto-updating to the scoring system, so that this componen
         setAdminScoreOveride(updatedInputs)
      }
 
-     const handlePlayerReportedArray = (matchIndex, opponentIndex, value) => {
+     const handlePlayerReportedArray = (matchIndex, opponentIndex, value, playerScoreOverideTemp) => {
         const inputIndex = matchIndex * 2 + opponentIndex;
-        const updatedInputs = [...scoreOveride];
-        updatedInputs[inputIndex] = value;
-        setScoreOveride(updatedInputs)
+        playerScoreOverideTemp[inputIndex] = value;
      }
      
      
      const handleSubmit = (e) => {
         const consolidatedAdminScores = [...adminScoreOveride]
 
+        //weak spot... if the admin puts any number into the input, the field will no longer be -1, even if it was by mistake
         for(let i = 0; i < adminScoreOveride.length; i++){
             if(adminScoreOveride[i] === -1){
                 consolidatedAdminScores[i] = scoreOveride[i]
             }
         }
+        //now consolidated with report scores 
 
         //itr thru each match, update scores corresponding in consolidatedAdminScores
         //rebuild playerScoreMap object with next rounds object
@@ -182,7 +190,7 @@ I want to incorporate auto-updating to the scoring system, so that this componen
                         {match.opponent1.name} ----- Score Overide: 
                         <input
                             type="text"
-                            value={adminScoreOveride[matchIndex * 2] || ''}
+                            value={adminScoreOveride[matchIndex * 2] === -1 ? '' : adminScoreOveride[matchIndex * 2]}
                             onChange={(e) => handleAdminOverideArray(matchIndex, 0, e.target.value)}
                         />
                     </div>
@@ -190,7 +198,7 @@ I want to incorporate auto-updating to the scoring system, so that this componen
                         {match.opponent2.name} ----- Score Overide: 
                         <input
                             type="text"
-                            value={adminScoreOveride[matchIndex * 2 + 1] || ''}
+                            value={adminScoreOveride[matchIndex * 2 + 1] === -1 ? '' : adminScoreOveride[matchIndex * 2 + 1]}
                             onChange={(e) => handleAdminOverideArray(matchIndex, 1, e.target.value)}
                         />
                     </div>
