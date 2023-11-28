@@ -194,7 +194,7 @@ I want to incorporate auto-updating to the scoring system, so that this componen
         })
 
         const tournamentState = await manager.get.stageData(0)
-
+        
         console.log(tournamentState)
 
         //rebuild playerScoreMap object with next rounds object
