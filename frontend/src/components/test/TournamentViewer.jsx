@@ -143,7 +143,7 @@ const TournamentBracketsEditor = ({ type }) => {
             //const tourneyData2 = await manager.get.currentMatches(0);
             const tourneyData = await manager.get.stageData(0);
 
-            console.log(tourneyData)
+            console.log("postRender", tourneyData)
 
             setData(tourneyData);
             //console.log(helpers.findParticipant(tourneyData.participant,1))
@@ -245,7 +245,7 @@ const TournamentBracketsEditor = ({ type }) => {
         setData(tournamentData);
         console.log("first render: ", tournamentData);
         //tournamentData.participant[1].name = 'Sam'
-        console.log(tournamentData.match.id)
+        
     }
 
     useEffect(() => {

@@ -133,9 +133,10 @@ I want to incorporate auto-updating to the scoring system, so that this componen
      };
 
      const handleAdminOverideArray = (matchIndex, opponentIndex, value) => {
+        let valueTemp = +value
         const inputIndex = matchIndex * 2 + opponentIndex;
         const updatedInputs = [...adminScoreOveride];
-        updatedInputs[inputIndex] = value;
+        updatedInputs[inputIndex] = valueTemp;
         setAdminScoreOveride(updatedInputs)
      }
 
@@ -145,8 +146,12 @@ I want to incorporate auto-updating to the scoring system, so that this componen
      }
      
      
-     const handleSubmit = (e) => {
-        const consolidatedAdminScores = [...adminScoreOveride]
+     const handleSubmit = async () => {
+        const storage = new InMemoryDatabase();
+        const manager = new BracketsManager(storage);
+        await manager.import(data)
+
+        let consolidatedAdminScores = [...adminScoreOveride]
 
         //weak spot... if the admin puts any number into the input, the field will no longer be -1, even if it was by mistake
         for(let i = 0; i < adminScoreOveride.length; i++){
@@ -154,9 +159,44 @@ I want to incorporate auto-updating to the scoring system, so that this componen
                 consolidatedAdminScores[i] = scoreOveride[i]
             }
         }
-        //now consolidated with report scores 
+        //now consolidated with report scores
+        console.log(matches)
 
         //itr thru each match, update scores corresponding in consolidatedAdminScores
+        matches.forEach(async (match, matchIndex) => {
+            let modMatchIndex = matchIndex * 2;
+            let oppOneScore = consolidatedAdminScores[modMatchIndex]
+            let oppTwoScore = consolidatedAdminScores[modMatchIndex + 1]
+       
+            
+
+            if(oppOneScore <= -1){
+                oppOneScore = 0
+            }
+
+            if (oppTwoScore <= -1){
+                oppTwoScore = 0
+            }
+
+            if(oppOneScore > oppTwoScore){
+                await manager.update.match({
+                    id: match.id,
+                    opponent1: { score: 7, result: "win"},
+                    opponent2: { score: 5}
+                  });
+            } else {
+                await manager.update.match({
+                    id: match.id,
+                    opponent1: { score: 5},
+                    opponent2: { score: 7, result: "win"}
+                });
+            }
+        })
+
+        const tournamentState = await manager.get.stageData(0)
+
+        console.log(tournamentState)
+
         //rebuild playerScoreMap object with next rounds object
         //send playerScoreMap, playerIDMap, tourney state object, and tourneyID for storage in db
 
@@ -205,7 +245,11 @@ I want to incorporate auto-updating to the scoring system, so that this componen
                     <hr />
                 </div>
             ))}
-            <button type="submit">Submit Scores</button>
+            <button 
+                type="submit"
+                onClick={handleSubmit}>
+                    Submit Scores
+            </button>
         </div>
     );
             };
