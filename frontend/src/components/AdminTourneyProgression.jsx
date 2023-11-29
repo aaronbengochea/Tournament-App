@@ -197,6 +197,10 @@ I want to incorporate auto-updating to the scoring system, so that this componen
         
         console.log(tournamentState)
 
+        //I figured out the issue with the tourney object not updating
+        //it has to do with the rendering of the bracket,
+        //we will need to rebuild the bracket
+
         //rebuild playerScoreMap object with next rounds object
         //send playerScoreMap, playerIDMap, tourney state object, and tourneyID for storage in db
 
