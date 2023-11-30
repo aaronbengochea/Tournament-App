@@ -199,11 +199,12 @@ I want to incorporate auto-updating to the scoring system, so that this componen
 
         //I figured out the issue with the tourney object not updating
         //it has to do with the rendering of the bracket,
-        //we will need to rebuild the bracket
+        //we will need to rebuild the bracket in the viewer
+        //we will need either a state management library like redux or we will need to inject props 
+        //to and from parent child components
 
         //rebuild playerScoreMap object with next rounds object
         //send playerScoreMap, playerIDMap, tourney state object, and tourneyID for storage in db
-
         //That completes one loop of a round.
 
      };
